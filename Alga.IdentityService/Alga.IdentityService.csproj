@@ -17,4 +17,8 @@
     <Folder Include="Operations/ServiceSettings/" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../../Alga/Alga.sessions/Alga.sessions/Alga.sessions.csproj" />
+  </ItemGroup>
+
 </Project>

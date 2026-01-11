@@ -8,4 +8,6 @@ public class Req : Alga.IdentityService.IServiceSettings
     public required string PostgresConnectionString { get; init; }
     public required string GoogleAuthenticationClientId { get; init; }
     public required string GoogleAuthenticationClientSecret { get; init; }
+    public required string AlgaSessionsSecretKey { get; init; }
+    public required byte AlgaSessionsSessionRefreshIntervalInMin { get; init; }
 }

@@ -27,6 +27,17 @@ builder.Services.AddSingleton<INatsConnection>(sp =>
     return new NatsConnection(opts);
 });
 
+// Alga.sessions
+// ----------------------------
+
+builder.Services.AddSingleton<Alga.sessions.IProvider>(sp =>
+{
+    var opts = new Alga.sessions.Operations.LibSettings.Req() { SecretKey = algaIdentityServiceSettingsRes.AlgaSessionsSecretKey, SessionRefreshIntervalInMin = algaIdentityServiceSettingsRes.AlgaSessionsSessionRefreshIntervalInMin };
+    return new Alga.sessions.Provider(opts);
+});
+
+// ----------------------------
+
 var app = builder.Build();
 
 app.Run();
