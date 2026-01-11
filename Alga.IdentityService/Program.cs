@@ -39,6 +39,21 @@ builder.Services.AddSingleton<Alga.sessions.IProvider>(sp =>
     return new Alga.sessions.Provider(opts);
 });
 
+// Hosted Services Registration
+// ----------------------------
+// Registers background hosted services that perform various runtime tasks,
+// including caching, file handling, sitemap generation, and database synchronization.
+// Some services are only registered in production mode (when !isDebug).
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Alga.IdentityService.Infrastructure.Background.IBackgroundProcess>()
+    .AddClasses(classes => classes.AssignableTo<Alga.IdentityService.Infrastructure.Background.IBackgroundProcess>())
+    .As<Alga.IdentityService.Infrastructure.Background.IBackgroundProcess>()
+    .WithSingletonLifetime()
+);
+
+builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background.BackgroundHost>();
+
 // ----------------------------
 
 var app = builder.Build();
