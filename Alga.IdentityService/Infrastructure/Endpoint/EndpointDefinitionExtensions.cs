@@ -1,21 +1,21 @@
 using System.Reflection;
 
-namespace Alga.IdentityService.Infrastructure;
+namespace Alga.IdentityService.Infrastructure.Endpoint;
 
-public static class EndpointDefinitionExtensions
+public static class DefinitionExtensions
 {
     public static void MapEndpoints(this IEndpointRouteBuilder app)
     {
         var endpoints = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(t =>
-                typeof(IEndpointDefinition).IsAssignableFrom(t) &&
+                typeof(IDefinition).IsAssignableFrom(t) &&
                 !t.IsInterface &&
                 !t.IsAbstract);
 
         foreach (var endpoint in endpoints)
         {
-            var instance = (IEndpointDefinition)Activator.CreateInstance(endpoint)!;
+            var instance = (IDefinition)Activator.CreateInstance(endpoint)!;
             instance.MapEndpoints(app);
         }
     }

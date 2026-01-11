@@ -1,6 +1,6 @@
 namespace Alga.IdentityService.Operations.ServiceSettings;
 
-public class Req : Alga.IdentityService.IServiceSettings
+public class Req
 {
     public required string NatsUrl { get; init; }
     public required string NatsUserName { get; init; }

@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure/" />
     <Folder Include="Operations/" />
     <Folder Include="Operations/ServiceSettings/" />
   </ItemGroup>
