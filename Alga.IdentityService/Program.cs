@@ -3,6 +3,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// Logging
+// ----------------------------
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+
 // Service Settings
 // ----------------------------
 
@@ -11,6 +19,7 @@ const string serviceSettingsSectionName = $"{serviceName}Settings";
 
 var algaIdentityServiceSettingsReq = builder.Configuration.GetSection(serviceSettingsSectionName).Get<Alga.IdentityService.Operations.ServiceSettings.Req>();
 var algaIdentityServiceSettingsRes = Alga.IdentityService.Operations.ServiceSettings.Builder.Do(algaIdentityServiceSettingsReq);
+
 
 // NATS
 // ----------------------------
@@ -31,6 +40,7 @@ builder.Services.AddSingleton<INatsConnection>(sp =>
     return new NatsConnection(opts);
 });
 
+
 // Alga.sessions
 // ----------------------------
 
@@ -39,6 +49,7 @@ builder.Services.AddSingleton<Alga.sessions.IProvider>(sp =>
     var opts = new Alga.sessions.Operations.LibSettings.Req() { SecretKey = algaIdentityServiceSettingsRes.AlgaSessionsSecretKey, SessionRefreshIntervalInMin = algaIdentityServiceSettingsRes.AlgaSessionsSessionRefreshIntervalInMin };
     return new Alga.sessions.Provider(opts);
 });
+
 
 // Authentication
 // --------------------------
@@ -61,6 +72,7 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+
 // Hosted Services Registration
 // ----------------------------
 // Registers background hosted services that perform various runtime tasks,
@@ -78,7 +90,11 @@ builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background
 
 // ----------------------------
 
+
 var app = builder.Build();
+
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Alga.IdentityService has started");
 
 app.UseAuthentication();
 app.UseAuthorization();
