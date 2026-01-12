@@ -13,6 +13,8 @@ static class Builder
         if (string.IsNullOrEmpty(req.PostgresConnectionString)) throw new InvalidOperationException($"{nameof(req.PostgresConnectionString)} is missing or empty. Request configuration is invalid.");
         if (string.IsNullOrEmpty(req.AlgaSessionsSecretKey)) throw new InvalidOperationException($"{nameof(req.AlgaSessionsSecretKey)} is missing or empty. Request configuration is invalid.");
 
+        if (string.IsNullOrEmpty(req.BaseUrl)) throw new InvalidOperationException($"{nameof(req.BaseUrl)} is missing or empty. Request configuration is invalid.");
+
         return req;
     }
 }

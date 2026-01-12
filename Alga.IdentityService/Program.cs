@@ -1,4 +1,5 @@
 using NATS.Client.Core;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,27 @@ builder.Services.AddSingleton<Alga.sessions.IProvider>(sp =>
     return new Alga.sessions.Provider(opts);
 });
 
+// Authentication
+// --------------------------
+// Google: https://console.cloud.google.com/apis/credentials
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = algaIdentityServiceSettingsRes.GoogleAuthenticationClientId;
+        options.ClientSecret = algaIdentityServiceSettingsRes.GoogleAuthenticationClientSecret;
+        options.SaveTokens = true;
+    });
+
+builder.Services.AddAuthorization();
+
 // Hosted Services Registration
 // ----------------------------
 // Registers background hosted services that perform various runtime tasks,
@@ -57,5 +79,8 @@ builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background
 // ----------------------------
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

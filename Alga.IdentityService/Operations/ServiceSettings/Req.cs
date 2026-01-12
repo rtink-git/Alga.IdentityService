@@ -2,6 +2,10 @@ namespace Alga.IdentityService.Operations.ServiceSettings;
 
 public class Req
 {
+    /// <summary>
+    /// Base service domain url. Example: "https://example.com"
+    /// </summary>
+    public required string BaseUrl { get; init; }
     public required string NatsUrl { get; init; }
     public required string NatsUserName { get; init; }
     public required string NatsUserPassword { get; init; }
