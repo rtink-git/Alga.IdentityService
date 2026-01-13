@@ -1,8 +1,8 @@
 namespace Alga.IdentityService.Operations.ServiceSettings;
 
-static class Builder
+static class H
 {
-    public static Req Do(Req? req)
+    public static Res Do(Req? req)
     {
         if (req is null) throw new InvalidOperationException("Request configuration is missing. Builder.Do cannot proceed with a null request.");
         if (string.IsNullOrEmpty(req.GoogleAuthenticationClientId)) throw new InvalidOperationException($"{nameof(req.GoogleAuthenticationClientId)} is missing or empty. Request configuration is invalid.");
@@ -15,6 +15,17 @@ static class Builder
 
         if (string.IsNullOrEmpty(req.BaseUrl)) throw new InvalidOperationException($"{nameof(req.BaseUrl)} is missing or empty. Request configuration is invalid.");
 
-        return req;
+        return new Res
+        {
+            AlgaSessionsSecretKey = req.AlgaSessionsSecretKey,
+            AlgaSessionsSessionRefreshIntervalInMin = req.AlgaSessionsSessionRefreshIntervalInMin,
+            BaseUrl = req.BaseUrl,
+            GoogleAuthenticationClientId = req.GoogleAuthenticationClientId,
+            GoogleAuthenticationClientSecret = req.GoogleAuthenticationClientSecret,
+            NatsUrl = req.NatsUrl,
+            NatsUserName = req.NatsUserName,
+            NatsUserPassword = req.NatsUserPassword,
+            PostgresConnectionString = req.PostgresConnectionString
+        };
     }
 }

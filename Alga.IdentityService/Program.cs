@@ -1,5 +1,6 @@
 using NATS.Client.Core;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Alga.transport.Providers.KVA;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ const string serviceName = "AlgaIdentityService";
 const string serviceSettingsSectionName = $"{serviceName}Settings";
 
 var algaIdentityServiceSettingsReq = builder.Configuration.GetSection(serviceSettingsSectionName).Get<Alga.IdentityService.Operations.ServiceSettings.Req>();
-var algaIdentityServiceSettingsRes = Alga.IdentityService.Operations.ServiceSettings.Builder.Do(algaIdentityServiceSettingsReq);
+var algaIdentityServiceSettingsRes = Alga.IdentityService.Operations.ServiceSettings.H.Do(algaIdentityServiceSettingsReq);
 
 
 // NATS
@@ -39,6 +40,18 @@ builder.Services.AddSingleton<INatsConnection>(sp =>
 
     return new NatsConnection(opts);
 });
+
+
+// Alga.transport
+// ----------------------------
+
+// builder.Services.AddSingleton<Alga.transport.Providers.KVA.I>(sp => new Alga.transport.Providers.Postgres.KVAClient("auth_db", algaIdentityServiceSettingsRes.PostgresConnectionString));
+
+// builder.Services.AddSingleton<Alga.transport.Providers.KVA.IFactory>(sp =>
+// {
+//     var stores = sp.GetServices<Alga.transport.Providers.KVA.I>();
+//     return new Alga.transport.Providers.KVA.Factory(stores);
+// });
 
 
 // Alga.sessions
@@ -90,6 +103,11 @@ builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background
 
 // ----------------------------
 
+Alga.IdentityService.Infrastructure.Context.Initialize(algaIdentityServiceSettingsRes);
+
+// ----------------------------
+
+var t = await Alga.IdentityService.Core.Entities.EmailUserIndex.E.GetValueAsync((Alga.IdentityService.Core.Entities.Email.GuidVO)new Guid("9e0b498f-73b9-4094-8684-03031dfc09b3"));
 
 var app = builder.Build();
 
