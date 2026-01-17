@@ -20,7 +20,6 @@
     <Folder Include="Core/Entities/User/Publish/" />
     <Folder Include="Infrastructure/Background/" />
     <Folder Include="Infrastructure/Providers/" />
-    <Folder Include="Operations/InfrastructureContext/" />
     <Folder Include="API/NATS/DeleteSession/" />
   </ItemGroup>
 

@@ -1,6 +1,5 @@
 using NATS.Client.Core;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Alga.transport.Providers.KVA;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +17,8 @@ builder.Logging.AddConsole();
 const string serviceName = "AlgaIdentityService";
 const string serviceSettingsSectionName = $"{serviceName}Settings";
 
-var algaIdentityServiceSettingsReq = builder.Configuration.GetSection(serviceSettingsSectionName).Get<Alga.IdentityService.Operations.ServiceSettings.Req>();
-var algaIdentityServiceSettingsRes = Alga.IdentityService.Operations.ServiceSettings.H.Do(algaIdentityServiceSettingsReq);
+var algaIdentityServiceSettingsReq = builder.Configuration.GetSection(serviceSettingsSectionName).Get<Alga.IdentityService.Application.Handlers.Simple.ServiceSettings.Req>();
+var algaIdentityServiceSettingsRes = Alga.IdentityService.Application.Handlers.Simple.ServiceSettings.H.Do(algaIdentityServiceSettingsReq);
 
 
 // NATS
@@ -119,7 +118,5 @@ logger.LogInformation("Alga.IdentityService has started");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-// var xxx = await Alga.IdentityService.Core.Entities.Email.Value.E.GetVAsync((Alga.IdentityService.Core.Entities.Email.GuidVO)(new Guid("fc8da02f-8837-4092-a10a-ecf379fc79d4")));
 
 app.Run();

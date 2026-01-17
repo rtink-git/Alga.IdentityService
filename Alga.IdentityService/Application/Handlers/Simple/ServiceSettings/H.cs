@@ -1,4 +1,4 @@
-namespace Alga.IdentityService.Operations.ServiceSettings;
+namespace Alga.IdentityService.Application.Handlers.Simple.ServiceSettings;
 
 static class H
 {
