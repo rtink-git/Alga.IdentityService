@@ -1,10 +1,10 @@
 namespace Alga.IdentityService.Core.Entities.EmailUserIndex;
 
-internal class E
+public class E
 {
-    private static readonly string LogBaseTryAdd = $"ERROR: {typeof(E).FullName}.{nameof(TryAddValue)}()";
+    class SR : Infrastructure.KVA.AdbBase { public SR() : base("email_user_table") { } }
 
-    public static async Task<User.GuidVO?> GetValueAsync(Email.GuidVO? guid)
+    internal static async Task<User.GuidVO?> GetVAsync(Email.GuidVO? guid)
     {
         if (!guid.HasValue) return null;
 
@@ -13,12 +13,14 @@ internal class E
         return v == null ? null : (User.GuidVO)(Guid)v;
     }
 
-    public static async Task<bool> TryAddValue(Email.GuidVO guid, User.GuidVO value)
-    {
-        if (guid == Guid.Empty) throw new ArgumentException($"{LogBaseTryAdd} - the 'guid' cannot be: {Guid.Empty}");
-        if (value == Guid.Empty) throw new ArgumentException($"{LogBaseTryAdd} - the 'value' cannot be: {Guid.Empty}");
+    static readonly string _logAddVAsync = $"Log (error): {typeof(E).FullName}.{nameof(AddVAsync)}()";
 
-        if (!await new SR().SetValueAsync(guid, value)) { Console.WriteLine($"{LogBaseTryAdd} - the 'value' was not added to collection"); return false; }
+    internal static async Task<bool> AddVAsync(Email.GuidVO guid, User.GuidVO value)
+    {
+        if (guid == Guid.Empty) throw new ArgumentException($"{_logAddVAsync} - the 'guid' cannot be: {Guid.Empty}");
+        if (value == Guid.Empty) throw new ArgumentException($"{_logAddVAsync} - the 'value' cannot be: {Guid.Empty}");
+
+        if (!await new SR().SetValueAsync(guid, value)) { Console.WriteLine($"{_logAddVAsync} - the 'value' was not added to collection"); return false; }
         return true;
     }
 }

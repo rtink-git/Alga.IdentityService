@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alga.sessions", "..\..\Alga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alga.transport", "..\..\Alga\Alga.transport\Alga.transport\Alga.transport\Alga.transport.csproj", "{A882CE82-5572-4CDA-BF02-7793222B80B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wwwcore", "..\..\Alga\Alga.wwwcore\wwwcore.csproj", "{577E1779-3688-4549-8DE8-6D7CCB786FA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{A882CE82-5572-4CDA-BF02-7793222B80B0}.Release|x64.Build.0 = Release|Any CPU
 		{A882CE82-5572-4CDA-BF02-7793222B80B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{A882CE82-5572-4CDA-BF02-7793222B80B0}.Release|x86.Build.0 = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|x64.Build.0 = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|x64.ActiveCfg = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|x64.Build.0 = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{577E1779-3688-4549-8DE8-6D7CCB786FA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

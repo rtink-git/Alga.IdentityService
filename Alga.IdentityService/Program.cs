@@ -42,18 +42,6 @@ builder.Services.AddSingleton<INatsConnection>(sp =>
 });
 
 
-// Alga.transport
-// ----------------------------
-
-// builder.Services.AddSingleton<Alga.transport.Providers.KVA.I>(sp => new Alga.transport.Providers.Postgres.KVAClient("auth_db", algaIdentityServiceSettingsRes.PostgresConnectionString));
-
-// builder.Services.AddSingleton<Alga.transport.Providers.KVA.IFactory>(sp =>
-// {
-//     var stores = sp.GetServices<Alga.transport.Providers.KVA.I>();
-//     return new Alga.transport.Providers.KVA.Factory(stores);
-// });
-
-
 // Alga.sessions
 // ----------------------------
 
@@ -101,13 +89,28 @@ builder.Services.Scan(scan => scan
 
 builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background.BackgroundHost>();
 
+
+// Alga.wwwcore Root Initialization
+// --------------------------------
+// Registers the Alga.wwwcore.Root as a singleton service.
+// Initializes it with configuration from "AlgaWwwcoreConfig", logger instance, and environment mode.
+// Enables structured frontend generation and development-time support based on project config.
+
+builder.Services.AddSingleton<Alga.wwwcore.Root>(sp =>
+{
+    var clientOptions = sp.GetRequiredService<IConfiguration>().GetSection("AlgaWwwcoreConfig").Get<Alga.wwwcore.ClientOptions>();
+
+    if (clientOptions == null) throw new ArgumentException(nameof(clientOptions));
+
+    return new(clientOptions, sp.GetRequiredService<IHostEnvironment>().IsDevelopment());
+});
+
+
 // ----------------------------
 
 Alga.IdentityService.Infrastructure.Context.Initialize(algaIdentityServiceSettingsRes);
 
 // ----------------------------
-
-var t = await Alga.IdentityService.Core.Entities.EmailUserIndex.E.GetValueAsync((Alga.IdentityService.Core.Entities.Email.GuidVO)new Guid("9e0b498f-73b9-4094-8684-03031dfc09b3"));
 
 var app = builder.Build();
 
@@ -116,5 +119,7 @@ logger.LogInformation("Alga.IdentityService has started");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// var xxx = await Alga.IdentityService.Core.Entities.Email.Value.E.GetVAsync((Alga.IdentityService.Core.Entities.Email.GuidVO)(new Guid("fc8da02f-8837-4092-a10a-ecf379fc79d4")));
 
 app.Run();

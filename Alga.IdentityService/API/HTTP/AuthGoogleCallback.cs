@@ -1,4 +1,6 @@
-using System;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace Alga.IdentityService.API.HTTP;
 
@@ -9,51 +11,55 @@ public class AuthGoogleCallback : Alga.IdentityService.Infrastructure.Endpoint.I
     {
         app.MapGet($"/auth/google/callback", async (HttpContext context) =>
         {
-            // try
-            // {
-            //     if (context == null) return Results.BadRequest("HttpContext is null.");
+            try
+            {
+                if (context == null) return Results.BadRequest("HttpContext is null.");
 
-            //     var result = await context.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                var result = await context.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            //     if (result.Principal == null) return Results.Unauthorized();
+                if (result.Principal == null) return Results.Unauthorized();
 
-            //     ClaimsIdentity? identity = result.Principal.Identities.FirstOrDefault();
+                ClaimsIdentity? identity = result.Principal.Identities.FirstOrDefault();
 
-            //     if (identity == null) return Results.BadRequest("Authentication failed, identity is null.");
+                if (identity == null) return Results.BadRequest("Authentication failed, identity is null.");
 
-            //     string? email = null;
-            //     foreach (var i in identity.Claims)
-            //         if (i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress") { email = i.Value; break; }
+                string? email = null;
+                foreach (var i in identity.Claims)
+                    if (i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress") { email = i.Value; break; }
 
-            //     if (string.IsNullOrEmpty(email)) return Results.BadRequest("Email is missing from authentication data.");
+                if (string.IsNullOrEmpty(email)) return Results.BadRequest("Email is missing from authentication data.");
 
-            //     if (result.Properties == null || result.Properties.Items == null) return Results.BadRequest("Properties = null");
+                if (result.Properties == null || result.Properties.Items == null) return Results.BadRequest("Properties = null");
 
-            //     var rsub = result.Properties.Items["RedirectUrl"];
+                var rsub = result.Properties.Items["RedirectUrl"];
 
-            //     if (rsub == null) return Results.BadRequest("RedirectUrl = null");
+                if (rsub == null) return Results.BadRequest("RedirectUrl = null");
 
-            //     string baseUrlAuto = new Uri(rsub).GetLeftPart(UriPartial.Authority);
+                string baseUrlAuto = new Uri(rsub).GetLeftPart(UriPartial.Authority);
 
-            //     var RedirectUrl = baseUrlAuto ?? "/";
+                // redirect url обязателен
 
-            //     NatsMsg<string>? session = null;
-            //     try { session = await bus.RequestAsync<string, string>(subject: $"{Constants.EnvironmentName}.auth_db_service.session.create.request", data: JsonSerializer.Serialize(new AuthRequest() { Identifier = email, RoleId = 1 }), replyOpts: new NatsSubOpts { Timeout = TimeSpan.FromSeconds(3) }); }
-            //     catch (Exception ex) { return Results.BadRequest($"NATS connection error. Error message:"); }
+                var RedirectUrl = baseUrlAuto ?? "/";
 
-            //     if (session == null || string.IsNullOrEmpty(session.Value.Data)) return Results.BadRequest("NATS = null");
+                // получаем сессию
 
-            //     string sessionEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(session.Value.Data)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
-            //     string rsubEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(rsub)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+                //     NatsMsg<string>? session = null;
+                //     try { session = await bus.RequestAsync<string, string>(subject: $"{Constants.EnvironmentName}.auth_db_service.session.create.request", data: JsonSerializer.Serialize(new AuthRequest() { Identifier = email, RoleId = 1 }), replyOpts: new NatsSubOpts { Timeout = TimeSpan.FromSeconds(3) }); }
+                //     catch (Exception ex) { return Results.BadRequest($"NATS connection error. Error message:"); }
 
-            //     RedirectUrl = $"{baseUrlAuto}/access?tkn={sessionEncoded}&redirect_url={rsubEncoded}";
+                //     if (session == null || string.IsNullOrEmpty(session.Value.Data)) return Results.BadRequest("NATS = null");
 
-            //     return Results.Redirect(RedirectUrl);
-            // }
-            // catch
-            // {
-            //     return Results.StatusCode(StatusCodes.Status500InternalServerError);
-            // }
+                //     string sessionEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(session.Value.Data)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+                //     string rsubEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(rsub)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+
+                //     RedirectUrl = $"{baseUrlAuto}/access?tkn={sessionEncoded}&redirect_url={rsubEncoded}";
+
+                return Results.Redirect(RedirectUrl);
+            }
+            catch
+            {
+                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }).WithSummary("Google OAuth authentication callback").WithDescription("Processes Google authentication response, creates user session and redirects"); // cheched: 20250525
     }
 

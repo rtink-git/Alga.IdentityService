@@ -19,6 +19,7 @@
     <Folder Include="Core/Entities/User/LongId/" />
     <Folder Include="Core/Entities/User/Publish/" />
     <Folder Include="Infrastructure/Background/" />
+    <Folder Include="Infrastructure/Providers/" />
     <Folder Include="Operations/InfrastructureContext/" />
     <Folder Include="API/NATS/DeleteSession/" />
   </ItemGroup>
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="../../../Alga/Alga.sessions/Alga.sessions/Alga.sessions.csproj" />
     <ProjectReference Include="../../../Alga/Alga.transport/Alga.transport/Alga.transport/Alga.transport.csproj" />
+    <ProjectReference Include="../../../Alga/Alga.wwwcore/wwwcore.csproj" />
   </ItemGroup>
 
 </Project>
