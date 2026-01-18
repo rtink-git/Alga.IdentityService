@@ -6,7 +6,6 @@ namespace Alga.IdentityService.API.HTTP;
 
 public class AuthGoogleCallback : Alga.IdentityService.Infrastructure.HTTP.Endpoint.IDefinition
 {
-    static string sessionHStr = "AlgaSession";
     public async ValueTask MapEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"/auth/google/callback", async (HttpContext context) =>

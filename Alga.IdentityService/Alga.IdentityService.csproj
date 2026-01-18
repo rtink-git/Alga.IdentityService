@@ -21,11 +21,9 @@
     <Folder Include="Core/Entities/User/LongId/" />
     <Folder Include="Core/Entities/User/Publish/" />
     <Folder Include="Infrastructure/Background/" />
-    <Folder Include="Infrastructure/Providers/" />
     <Folder Include="API/NATS/DeleteSession/" />
-    <Folder Include="wwwcore/" />
-    <Folder Include="wwwcore/Modules/" />
-    <Folder Include="wwwcore/UISs/" />
+    <Folder Include="wwwroot/Modules/BaseModule/" />
+    <Folder Include="wwwroot/Modules/SignInModule/" />
   </ItemGroup>
 
   <ItemGroup>

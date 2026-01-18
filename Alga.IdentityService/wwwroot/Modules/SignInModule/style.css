@@ -1,0 +1,29 @@
+
+.SignInModule > * { width: 330px; }
+
+.SignInModule > h1 {
+    font-size: 1.2rem;
+    letter-spacing: .4px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding-inline: 20px;
+    width: 290px;
+}
+
+.SignInModule > button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: rgb(26, 27, 27);
+    border-radius: 100px;
+    clip-path: polygon(15% 0, 100% 10%, 91% 99%, 0% 100%);
+}
+
+.SignInModule > button > span {
+    font-size: 16px;
+    letter-spacing: .4px;
+    color: rgb(236, 237, 241);
+    font-weight: 600;
+}

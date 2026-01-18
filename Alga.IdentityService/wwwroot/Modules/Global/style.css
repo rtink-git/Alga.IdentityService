@@ -1,0 +1,47 @@
+:root {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    --background: #ffffff;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: var(--background);
+}
+
+html { height: 100%; }
+
+body { position: relative; min-height: 100%; }
+
+main { 
+    display: flex; 
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+a, button {
+    border: none;
+    background: none;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+textarea { resize: vertical; letter-spacing: 0.5px; }
+
+textarea::placeholder { font-size: 16px; }
+
+h1, h2, h3, p, a, span, input, textarea, time, ::placeholder, select {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-family: 'Montserrat', sans-serif;
+}

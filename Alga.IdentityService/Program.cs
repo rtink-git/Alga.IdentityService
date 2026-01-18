@@ -99,13 +99,16 @@ builder.Services.AddHostedService<Alga.IdentityService.Infrastructure.Background
 
 builder.Services.AddSingleton<Alga.wwwcore.Root>(sp =>
 {
-    var clientOptions = sp.GetRequiredService<IConfiguration>().GetSection("AlgaWwwcoreConfig").Get<Alga.wwwcore.ClientOptions>();
+    var clientSettings = sp.GetRequiredService<IConfiguration>().GetSection("AlgaWwwcoreConfig").Get<Alga.wwwcore.ClientSettings>();
 
-    if (clientOptions == null) throw new ArgumentException(nameof(clientOptions));
+    if (clientSettings == null) throw new ArgumentException(nameof(clientSettings));
 
-    return new(clientOptions, sp.GetRequiredService<IHostEnvironment>().IsDevelopment());
+    return new(clientSettings, sp.GetRequiredService<IHostEnvironment>().IsDevelopment());
 });
 
+// ----------------------------
+
+builder.Services.AddEndpointsApiExplorer();
 
 // ----------------------------
 
@@ -120,6 +123,8 @@ logger.LogInformation("Alga.IdentityService has started");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
 
 app.MapEndpoints();
 
