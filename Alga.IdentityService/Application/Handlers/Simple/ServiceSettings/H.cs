@@ -25,7 +25,8 @@ static class H
             NatsUrl = req.NatsUrl,
             NatsUserName = req.NatsUserName,
             NatsUserPassword = req.NatsUserPassword,
-            PostgresConnectionString = req.PostgresConnectionString
+            PostgresConnectionString = req.PostgresConnectionString,
+            IsDebug = req.IsDebug
         };
     }
 }

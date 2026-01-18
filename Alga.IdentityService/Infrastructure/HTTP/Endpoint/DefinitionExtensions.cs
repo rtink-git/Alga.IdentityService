@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Alga.IdentityService.Infrastructure.Endpoint;
+namespace Alga.IdentityService.Infrastructure.HTTP.Endpoint;
 
 public static class DefinitionExtensions
 {

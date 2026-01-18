@@ -4,10 +4,10 @@ using System.Security.Claims;
 
 namespace Alga.IdentityService.API.HTTP;
 
-public class AuthGoogleCallback : Alga.IdentityService.Infrastructure.Endpoint.IDefinition
+public class AuthGoogleCallback : Alga.IdentityService.Infrastructure.HTTP.Endpoint.IDefinition
 {
     static string sessionHStr = "AlgaSession";
-    public void MapEndpoints(IEndpointRouteBuilder app)
+    public async ValueTask MapEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"/auth/google/callback", async (HttpContext context) =>
         {

@@ -1,5 +1,6 @@
 using NATS.Client.Core;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Alga.IdentityService.Infrastructure.HTTP.Endpoint;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ const string serviceName = "AlgaIdentityService";
 const string serviceSettingsSectionName = $"{serviceName}Settings";
 
 var algaIdentityServiceSettingsReq = builder.Configuration.GetSection(serviceSettingsSectionName).Get<Alga.IdentityService.Application.Handlers.Simple.ServiceSettings.Req>();
+algaIdentityServiceSettingsReq?.IsDebug = builder.Environment.IsDevelopment();
 var algaIdentityServiceSettingsRes = Alga.IdentityService.Application.Handlers.Simple.ServiceSettings.H.Do(algaIdentityServiceSettingsReq);
 
 
@@ -118,5 +120,7 @@ logger.LogInformation("Alga.IdentityService has started");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapEndpoints();
 
 app.Run();

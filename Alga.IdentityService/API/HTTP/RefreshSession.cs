@@ -1,9 +1,9 @@
 namespace Alga.IdentityService.API.HTTP;
 
-public class RefreshSession : Alga.IdentityService.Infrastructure.Endpoint.IDefinition
+public class RefreshSession : Alga.IdentityService.Infrastructure.HTTP.Endpoint.IDefinition
 {
     static string sessionHStr = "AlgaSession";
-    public void MapEndpoints(IEndpointRouteBuilder app)
+    public async ValueTask MapEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"/session/refresh", async (HttpContext context) =>
         {

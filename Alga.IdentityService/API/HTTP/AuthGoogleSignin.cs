@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.Google;
 
 namespace Alga.IdentityService.API.HTTP;
 
-public class AuthGoogleSignin : Alga.IdentityService.Infrastructure.Endpoint.IDefinition
+public class AuthGoogleSignin : Alga.IdentityService.Infrastructure.HTTP.Endpoint.IDefinition
 {
-    public void MapEndpoints(IEndpointRouteBuilder app)
+    public async ValueTask MapEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"/auth/google/signin", (string RedirectUrl, HttpContext context) =>
         {

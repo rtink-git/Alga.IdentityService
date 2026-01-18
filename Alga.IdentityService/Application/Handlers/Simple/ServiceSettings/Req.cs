@@ -14,4 +14,8 @@ public class Req
     public required string GoogleAuthenticationClientSecret { get; init; }
     public required string AlgaSessionsSecretKey { get; init; }
     public required byte AlgaSessionsSessionRefreshIntervalInMin { get; init; }
+
+    // ----------
+
+    public bool IsDebug { get; set; } = true;
 }

@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="API/HTTP/Web/" />
+    <Folder Include="API/HTTP/Web/UI/" />
     <Folder Include="Core/Entities/Email/Value/" />
     <Folder Include="Core/Entities/EmailUserIndex/" />
     <Folder Include="Core/Entities/User/" />
@@ -21,6 +23,9 @@
     <Folder Include="Infrastructure/Background/" />
     <Folder Include="Infrastructure/Providers/" />
     <Folder Include="API/NATS/DeleteSession/" />
+    <Folder Include="wwwcore/" />
+    <Folder Include="wwwcore/Modules/" />
+    <Folder Include="wwwcore/UISs/" />
   </ItemGroup>
 
   <ItemGroup>
