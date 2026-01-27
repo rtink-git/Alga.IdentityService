@@ -2,25 +2,50 @@ using System.Text.RegularExpressions;
 
 namespace Alga.IdentityService.Core.Entities.Email.Value;
 
-public class E
+public class E : Infrastructure.KVA.AdbABase<string?>, IE
 {
-    class SR : Infrastructure.KVA.AdbBase { public SR() : base("email_value_table") { } }
+    readonly byte _valueMaxLength = 254;
 
-    internal static async Task<GuidVO?> GetIdAsync(string value) => string.IsNullOrEmpty(value) ? null : (await new SR().GetIdAsync(value) is not { } v) ? null : (GuidVO)v;
+    public E(ILogger? logger = null) : base("email_value_table", logger) { }
 
-    internal static async Task<string?> GetVAsync(GuidVO? guid) => !guid.HasValue ? null : (await new SR().GetValueAsync(guid.Value) is not { } v) ? null : v.ToString();
+    //internal static async Task<GuidVO?> GetIdAsync(string value) => string.IsNullOrEmpty(value) ? null : (await new SR().GetIdAsync(value) is not { } v) ? null : (GuidVO)v;
 
-    static readonly string _logAddVAsync = $"Log (error): {typeof(E).FullName}.{nameof(AddVAsync)}()";
+    // internal static async Task<string?> GetVAsync(GuidVO? guid) => !guid.HasValue ? null : (await new SR().GetValueAsync(guid.Value) is not { } v) ? null : v.ToString();
 
-    static readonly Regex _regex = new Regex(@"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    readonly string _logAddAsync = $"Log (error): {typeof(E).FullName}.{nameof(AddAsync)}()";
 
-    internal static async Task<bool> AddVAsync(Guid guid, string value)
+    internal async Task<Guid?> AddAsync(string? value)
     {
-        if (guid == Guid.Empty) throw new ArgumentException($"{_logAddVAsync} - the 'guid' cannot be: {Guid.Empty}");
-        if (string.IsNullOrEmpty(value)) throw new ArgumentException($"{_logAddVAsync} - the 'value' cannot be: null or empty");
-        if (!_regex.IsMatch(value)) throw new ArgumentException($"{_logAddVAsync} - the 'value' has invalid format");
+        if (IsValidateV(value))
+        {
+            //throw new ArgumentException($"{_logAddAsync} - the 'value' is not validate");
+            return null;
+        }
 
-        if (!await new SR().SetValueAsync(guid, value)) { Console.WriteLine($"{_logAddVAsync} - the 'value' was not added to collection"); return false; }
+        var id = Guid.NewGuid();
+
+        if (!await AddValueAsync(id, value))
+        {
+            // Console.WriteLine($"{_logAddAsync} - the 'value' was not added to collection"); 
+            return null;
+        }
+
+        return id;
+    }
+
+    internal async Task<Guid?> GetOrAddIdAsync(string? value)
+    {
+        if (await GetIdAsync(value) is { } id) return id;
+        return await AddAsync(value);
+    }
+
+    readonly Regex _regex = new Regex(@"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    bool IsValidateV(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return false;
+        if (value.Length > _valueMaxLength) return false;
+        if (!_regex.IsMatch(value)) return false;
 
         return true;
     }

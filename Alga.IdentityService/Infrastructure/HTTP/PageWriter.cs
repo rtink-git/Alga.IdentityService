@@ -34,6 +34,8 @@ internal static class PageWriter
                     state.template.AsSpan().CopyTo(span[state.UIPrefix.Length..]);
                 });
 
+            seoModel.Path = context.Request.Path;
+
             www.WriteHtml(writer, fullPath, seoModel, pageModelAsJSON);
             await writer.FlushAsync(context.RequestAborted);
         }

@@ -1,0 +1,27 @@
+services:
+  fohouse-ru:
+    image: mcr.microsoft.com/dotnet/aspnet:10.0
+    container_name: auth-rt-ink-app
+
+    working_dir: /app
+
+    volumes:
+      - /root/docker/auth-rt-ink:/app
+
+    command: ["dotnet", "Alga.IdentityService.dll"]
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: "http://+:8080"
+
+    ports:
+      - "8083:8080"
+
+    networks:
+      - app-network
+
+    restart: unless-stopped
+
+networks:
+  app-network:
+    external: true

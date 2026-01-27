@@ -1,0 +1,1 @@
+{ "modules": [ "/Modules/Global", "/Modules/BaseModule", "/Modules/AlgaIdentityServiceAPI", "/Modules/AccessModule" ] }

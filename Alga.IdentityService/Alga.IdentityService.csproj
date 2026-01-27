@@ -13,20 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API/HTTP/Web/" />
-    <Folder Include="API/HTTP/Web/UI/" />
-    <Folder Include="Core/Entities/Email/Value/" />
-    <Folder Include="Core/Entities/EmailUserIndex/" />
-    <Folder Include="Core/Entities/User/" />
-    <Folder Include="Core/Entities/User/LongId/" />
-    <Folder Include="Core/Entities/User/Publish/" />
-    <Folder Include="Infrastructure/Background/" />
-    <Folder Include="API/NATS/DeleteSession/" />
-    <Folder Include="wwwroot/Modules/BaseModule/" />
-    <Folder Include="wwwroot/Modules/SignInModule/" />
+    <None Include="Dockerfile" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <None Include="docker-compose.yml" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../../Alga/Alga.IdentityService.Client/Alga.IdentityService.Client/Alga.IdentityService.Client/Alga.IdentityService.Client.csproj" />
     <ProjectReference Include="../../../Alga/Alga.sessions/Alga.sessions/Alga.sessions.csproj" />
     <ProjectReference Include="../../../Alga/Alga.transport/Alga.transport/Alga.transport/Alga.transport.csproj" />
     <ProjectReference Include="../../../Alga/Alga.wwwcore/wwwcore.csproj" />

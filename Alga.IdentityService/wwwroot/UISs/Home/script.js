@@ -9,8 +9,4 @@ export async function HomeUIS() {
     // --------------------
 
     let lastVerticalId = signInModule.id
-
-    // --------------------
-
-    // click google button
 }

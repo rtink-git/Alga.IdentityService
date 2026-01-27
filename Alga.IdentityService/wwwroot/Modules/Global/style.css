@@ -1,7 +1,9 @@
 :root {
-    font-size: 16px;
+    --size: 16px;
+    --bs-color-text-a: rgb(43, 110, 177);
+    font-size: var(--size);
     font-family: 'Montserrat', sans-serif;
-    --background: #ffffff;
+    --background: #e9ecee;
 }
 
 html, body {

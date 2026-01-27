@@ -7,7 +7,7 @@ internal static class Context
     internal static string PostgresConnectionString = string.Empty;
     internal static string CacheControlValue = "";
 
-    public static void Initialize(Application.Handlers.Simple.ServiceSettings.Res res)
+    public static void Initialize(ServiceSettings.IServiceSettings res)
     {
         IsDebug = res.IsDebug;
         PostgresConnectionString = res.PostgresConnectionString;
